@@ -23,7 +23,7 @@ library(stabplot)
 
 A toy example of usage:
 ```r
-instead.set.seed(123)
+set.seed(123)
 x <- matrix(rnorm(1000), ncol = 10)
 # create beta based on the first 3 columns of x and some error
 beta <- c(1, 2, 3, rep(0, 7))
