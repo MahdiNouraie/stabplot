@@ -19,7 +19,9 @@ library(stabplot)
 ---
 ## Regustab
 
-`Regustab` function creates a plot that displays stability values in relation to regularization values for LASSO through stability selection. The plot highlights key lambda values, including `lambda.min`, `lambda.1se`, and `lambda.stable`. If `lambda.stable` is not available, the function will display `lambda.stable.1sd` 
+`Regustab` function creates a plot that displays stability values in relation to regularization values for LASSO through stability selection. The plot highlights key lambda values, including `lambda.min`, `lambda.1se`, and `lambda.stable`. If `lambda.stable` is not available, the function will display `lambda.stable.1sd`.
+
+`Regustab` also prints the values of highlughted regularization values on the plot (`lambda.min`, `lambda.1se`, and `lambda.stable` or `lambda.stable.1sd`).
 
 A toy example of usage:
 ```r
@@ -30,6 +32,14 @@ beta <- c(1, 2, 3, rep(0, 7))
 y <- x %*% beta + rnorm(100)
 B <- 10 # number of sub-samples
 Regustab(x, y, B)
+# $min
+#[1] 0.04354162
+
+#$`1se`
+#[1] 0.2323685
+
+#$stable
+#[1] 0.3371269
 ```
 ![Regustab Example](man/Regustab.png)
 
