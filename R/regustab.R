@@ -18,16 +18,15 @@
 #' @seealso \link[=Regustab]{Regustab}, \link[=Convstab]{Convstab}
 
 
-ensure_dependencies <- function() {
+selection_matrix <- function(x, y, B){
   required_packages <- c("glmnet", "latex2exp", "ggplot2")
   for (pkg in required_packages) {
-    if (!requireNamespace(pkg, quietly = TRUE)) {
+    if (!requireNamespace(pkg)) {
       install.packages(pkg)
     }
   }
-}
-
-selection_matrix <- function(x, y, B){
+  library(glmnet)
+  library(latex2exp)
   p <- ncol(x) # Number of predictors
   cv_lasso <- cv.glmnet(x, y, nfolds = 10, alpha = 1) # Fit LASSO model with 10-fold CV
   candidate_set <- cv_lasso$lambda # Candidate set of lambda values
@@ -137,8 +136,6 @@ getStability <- function(X,alpha=0.05) {
 #' @export
 
 Regustab <- function(x, y, B){
-  library(glmnet)
-  library(latex2exp)
   sel_mats <- selection_matrix(x, y, B)$S_list
   stability_results <- lapply(sel_mats, getStability)
   stab_values <- unlist(lapply(stability_results, function(x) x$stability))

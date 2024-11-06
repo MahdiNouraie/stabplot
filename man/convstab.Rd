@@ -19,7 +19,7 @@ Convstab(x, y, B, alpha = 0.05)
 A plot displaying the stability values and corresponding confidence interval through sequential sub-sampling.
 }
 \description{
-`Convstab` creates a plot displaying stability values along with confidence intervals, bagainst the sequential sub-sampling index within stability selection. This plot aids in monitoring the convergence status of stability values.
+`Convstab` creates a plot displaying stability values along with confidence intervals, against the sequential sub-sampling index within stability selection. This plot aids in monitoring the convergence status of stability values.
 The function uses `lambda.stable` to generate the plot; if `lambda.stable` is unavailable, it defaults to `lambda.stable.1sd`.
 }
 \examples{

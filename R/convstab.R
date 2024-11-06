@@ -49,7 +49,7 @@ Convstab <- function(x, y, B, alpha = 0.05){
     stability <- data.frame() # Initialize a data frame to store stability values
     Stable_S <- sel_mats[[index_of_lambda_stable]] # Stable selection matrix for lambda_stable
     for (k in 2:nrow(Stable_S)){ # loop through subsamples results
-      output <- getStability(Stable_S[1:k,]) # Compute stability values
+      output <- getStability(Stable_S[1:k,], alpha) # Compute stability values
       stability <- rbind(stability, data.frame(k, output$stability, output$variance, output$lower, output$upper)) # Append stability values to the data frame
     }
     colnames(stability) <- c('Iteration', 'Stability', 'Variance', 'Lower', 'Upper') # Set column names of the data frame
