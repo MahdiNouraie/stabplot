@@ -1,7 +1,7 @@
 source("R/regustab.R")
 library(ggplot2)
 
-#' convstab
+#' Convstab
 #'
 #' This function produces a plot of stability values and corresponding confidence intercval through sequential sub-sampling of stability selection to facilitate monitoring the convergence status.
 #'
@@ -21,7 +21,7 @@ library(ggplot2)
 #' x <- as.matrix(data[, -1]) # Extract the predictors
 #' y <- data[,1] # Extract the response
 #' B = 100
-#' convstab(x, y, B, alpha = 0.05)
+#' Convstab(x, y, B, alpha = 0.05)
 #'}
 #' @references
 #' Meinshausen, N., & Bühlmann, P. (2010). Stability selection. Journal of the Royal Statistical Society Series B: Statistical Methodology, 72(4), 417-473.
@@ -29,7 +29,7 @@ library(ggplot2)
 #' https://github.com/nogueirs/JMLR2018
 #'
 #' @export
-convstab <- function(x, y, B, alpha = 0.05){
+Convstab <- function(x, y, B, alpha = 0.05){
   sel_mats <- selection_matrix(x, y, B)$S_list
   stability_results <- lapply(sel_mats, getStability)
   stab_values <- unlist(lapply(stability_results, function(x) x$stability))
