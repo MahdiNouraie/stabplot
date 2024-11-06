@@ -13,6 +13,7 @@ devtools::install_github("MahdiNouraie/stabplot")
 library(stabplot) 
 ```
 `Regustab` function creates a plot that displays stability values in relation to regularization values for LASSO through stability selection. The plot highlights key lambda values, including `lambda.min`, `lambda.1se`, and `lambda.stable`. If `lambda.stable` is not available, the function will display `lambda.stable.1sd` 
+
 A toy example of usage:
 ```r
 instead.set.seed(123)
