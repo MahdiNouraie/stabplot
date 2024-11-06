@@ -23,3 +23,18 @@ y <- x %*% beta + rnorm(100)
 B <- 10
 Regustab(x, y, B)
 ```
+
+![Regustab Example](man/Regustab.png)
+
+
+
+
+
+
+
+
+
+
+
+
+
