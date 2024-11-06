@@ -44,7 +44,7 @@ Convstab(x, y, B)
 
 1. Meinshausen, N., & Bühlmann, P. (2010). Stability selection. Journal of the Royal Statistical Society Series B: Statistical Methodology, 72(4), 417-473.
 2. Nogueira, S., Sechidis, K., & Brown, G. (2018). On the stability of feature selection algorithms. Journal of Machine Learning Research, 18(174), 1-54.
-3. [GitHub repository of the paper](https://github.com/nogueirs/JMLR2018)
+3. [GitHub repository of Nogueira et al (2018)](https://github.com/nogueirs/JMLR2018)
 4. Tibshirani, R. (1996). Regression shrinkage and selection via the lasso. Journal of the Royal Statistical Society Series B: Statistical Methodology, 58(1), 267-288.
 
 
