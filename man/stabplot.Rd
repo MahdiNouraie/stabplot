@@ -4,10 +4,10 @@
 \name{stabplot}
 \alias{-package}
 \alias{stabplot}
-\alias{ensure_dependencies}
+\alias{selection_matrix}
 \title{stabplot: Stability Plot}
 \usage{
-ensure_dependencies()
+selection_matrix(x, y, B)
 }
 \description{
 This package contains two functions: `Regustab` and `Convstab`.

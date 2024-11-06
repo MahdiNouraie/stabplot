@@ -105,6 +105,9 @@ getStability <- function(X,alpha=0.05) {
 #' The plot highlights key lambda values, including `lambda.min`, `lambda.1se`, and `lambda.stable`.
 #' If `lambda.stable` is not available, the function will display `lambda.stable.1sd` instead.
 #'
+#' Regustab also prints the values of highlighted regularization values on the plot
+#' (`lambda.min`, `lambda.1se`, and `lambda.stable` or `lambda.stable.1sd`).
+#'
 #' @import glmnet
 #' @import latex2exp
 #' @param x A numeric matrix of predictors.
