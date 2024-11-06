@@ -25,7 +25,7 @@ x <- matrix(rnorm(1000), ncol = 10)
 # create beta based on the first 3 columns of x and some error
 beta <- c(1, 2, 3, rep(0, 7))
 y <- x %*% beta + rnorm(100)
-B <- 10
+B <- 10 # number of sub-samples
 Regustab(x, y, B)
 ```
 ![Regustab Example](man/Regustab.png)
@@ -42,7 +42,7 @@ x <- matrix(rnorm(1000), ncol = 10)
 # create beta based on the first 3 columns of x and some error
 beta <- c(5, 4, 3, rep(0, 7))
 y <- x %*% beta + rnorm(100)
-B <- 200
+B <- 200 #number of sub-samples
 Convstab(x, y, B)
 ```
 ![Regustab Example](man/Convstab.png)
