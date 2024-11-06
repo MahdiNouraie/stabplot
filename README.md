@@ -23,7 +23,7 @@ library(stabplot)
 
 A toy example of usage:
 ```r
-set.seed(123)
+set.seed(123) # for reproducibility
 x <- matrix(rnorm(1000), ncol = 10)
 # create beta based on the first 3 columns of x and some error
 beta <- c(1, 2, 3, rep(0, 7))
@@ -40,7 +40,7 @@ Regustab(x, y, B)
 
 A toy esample odf usage:
 ```r
-set.seed(123)
+set.seed(123) # for reproducibility
 x <- matrix(rnorm(1000), ncol = 10)
 # create beta based on the first 3 columns of x and some error
 beta <- c(5, 4, 3, rep(0, 7))
