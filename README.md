@@ -3,6 +3,8 @@
 `stabplot` is an R package designed to facilitate regularization tuning and convergence monitoring in stability selection using LASSO. It provides two core functions, `Regustab` and `Convstab`, which help visualize stability in regularized models, supporting users in selecting appropriate regularization parameters and assessing convergence.
 Help functions are available through R by `?stabplot`, `?Regustab`, and `?Convstab`.
 
+The `stabplot` package depends on `glmnet`, `ggplot2`, and `latex2exp` packages.
+
 ---
 ## Installation
 
@@ -44,7 +46,8 @@ x <- matrix(rnorm(1000), ncol = 10)
 beta <- c(5, 4, 3, rep(0, 7))
 y <- x %*% beta + rnorm(100)
 B <- 200 #number of sub-samples
-Convstab(x, y, B)
+alpha <- 0.05 #significance level of confidence interval
+Convstab(x, y, B, alpha)
 ```
 ![Regustab Example](man/Convstab.png)
 
