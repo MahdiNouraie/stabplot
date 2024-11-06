@@ -14,6 +14,16 @@
 #' https://github.com/nogueirs/JMLR2018
 #' @seealso \link[=Regustab]{Regustab}, \link[=Convstab]{Convstab}
 
+
+ensure_dependencies <- function() {
+  required_packages <- c("glmnet", "latex2exp", "ggplot2")
+  for (pkg in required_packages) {
+    if (!requireNamespace(pkg, quietly = TRUE)) {
+      install.packages(pkg)
+    }
+  }
+}
+
 library(glmnet)
 library(latex2exp)
 
