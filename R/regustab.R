@@ -1,3 +1,19 @@
+#' @docType package
+#' @name stabplot
+#' @title stabplot: Stability Plot
+#' @description
+#' This package contains two functions: `Regustab` and `Convstab`.
+#' The `Regustab` function generates a plot showing the relationship between stability values and regularization parameters for LASSO, aiding in the process of regularization tuning via stability selection.
+#' The `Convstab` function creates a plot of stability values against index of the iterative sub-sampling, helping to monitor the convergence of these values over time.
+#' @author Mahdi Nouraie (mahdinouraie20@gmail.com)
+#' @references
+#' Meinshausen, N., & Bühlmann, P. (2010). Stability selection. Journal of the Royal Statistical Society Series B: Statistical Methodology, 72(4), 417-473.
+#'
+#'Nogueira, S., Sechidis, K., & Brown, G. (2018). On the stability of feature selection algorithms. Journal of Machine Learning Research, 18(174), 1-54.
+#'
+#' https://github.com/nogueirs/JMLR2018
+#' @seealso \link[=Regustab]{Regustab}, \link[=Convstab]{Convstab}
+
 library(glmnet)
 library(latex2exp)
 
@@ -76,7 +92,9 @@ getStability <- function(X,alpha=0.05) {
 
 #' Regustab
 #'
-#' This function produces a plot of stability values against regularization values for LASSO through stability selection to facilitate regularization tuning.
+#' This function creates a plot that displays stability values in relation to regularization values for LASSO through stability selection.
+#' The plot highlights key lambda values, including `lambda.min`, `lambda.1se`, and `lambda.stable`.
+#' If `lambda.stable` is not available, the function will display `lambda.stable.1sd` instead.
 #'
 #' @param x A numeric matrix of predictors.
 #' @param y A numeric vector of response values.
@@ -91,14 +109,16 @@ getStability <- function(X,alpha=0.05) {
 #' beta <- c(1, 2, 3, rep(0, 7))
 #' y <- x %*% beta + rnorm(100)
 #' B <- 10
-#' Regustab(x, y, B)  # Example usage of the regustab function
+#' Regustab(x, y, B)  # Example usage of the Regustab function
 #'}
 #'
 #' @references
 #' Meinshausen, N., & Bühlmann, P. (2010). Stability selection. Journal of the Royal Statistical Society Series B: Statistical Methodology, 72(4), 417-473.
 #'
-#' https://github.com/nogueirs/JMLR2018
+#'Nogueira, S., Sechidis, K., & Brown, G. (2018). On the stability of feature selection algorithms. Journal of Machine Learning Research, 18(174), 1-54.
 #'
+#' https://github.com/nogueirs/JMLR2018
+#' @seealso \link[=stabplot]{stabplot}
 #' @export
 
 Regustab <- function(x, y, B){

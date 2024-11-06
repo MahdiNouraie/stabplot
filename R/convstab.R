@@ -1,9 +1,10 @@
-source("R/regustab.R")
+source("R/Regustab.R")
 library(ggplot2)
 
 #' Convstab
 #'
-#' This function produces a plot of stability values and corresponding confidence intercval through sequential sub-sampling of stability selection to facilitate monitoring the convergence status.
+#' `Convstab` creates a plot displaying stability values along with confidence intervals, bagainst the sequential sub-sampling index within stability selection. This plot aids in monitoring the convergence status of stability values.
+#' The function uses `lambda.stable` to generate the plot; if `lambda.stable` is unavailable, it defaults to `lambda.stable.1sd`.
 #'
 #' @param x A numeric matrix of predictors.
 #' @param y A numeric vector of response values.
@@ -14,19 +15,21 @@ library(ggplot2)
 #' @examples
 #' \dontrun{
 #' set.seed(123)
-#' library(hdi)
-#' data(riboflavin) # Load the riboflavin data
-#' data <- as.data.frame(cbind(Y=riboflavin$y - 1, X=riboflavin$x)) # Convert the data to a data frame
-#' rm(riboflavin) # Remove the original data to save memory
-#' x <- as.matrix(data[, -1]) # Extract the predictors
-#' y <- data[,1] # Extract the response
-#' B = 100
-#' Convstab(x, y, B, alpha = 0.05)
+#' x <- matrix(rnorm(1000), ncol = 10)
+#' # create beta based on the first 3 columns of x and some error
+#' beta <- c(5, 4, 3, rep(0, 7))
+#' y <- x %*% beta + rnorm(100)
+#' B <- 200
+#' Convstab(x, y, B)  # Example usage of the Convstab function
 #'}
 #' @references
 #' Meinshausen, N., & Bühlmann, P. (2010). Stability selection. Journal of the Royal Statistical Society Series B: Statistical Methodology, 72(4), 417-473.
 #'
+#'Nogueira, S., Sechidis, K., & Brown, G. (2018). On the stability of feature selection algorithms. Journal of Machine Learning Research, 18(174), 1-54.
+#'
 #' https://github.com/nogueirs/JMLR2018
+#'
+#' @seealso \link[=stabplot]{stabplot}
 #'
 #' @export
 Convstab <- function(x, y, B, alpha = 0.05){

@@ -7,8 +7,7 @@ Maintainer: <mahdinouraie20@gmail.com>
 Description: This package applies stability selection on the data using LASSO and provides two plots for stability analysis. The first plot is regustab plot which shows the stability of the process over the regularization grid. The second plot is convstab plot which shows the stability of the process over the number of subsamples.
 License: MIT + file LICENSE.txt
 Encoding: UTF-8
-LazyData: true
-Imports: glmnet, latex2exp
+Imports: glmnet, latex2exp, ggplot2
 URL: https://github.com/MahdiNouraie/stabplot
 BugReports: https://github.com/MahdiNouraie/stabplot/issues
 RoxygenNote: 7.3.2
