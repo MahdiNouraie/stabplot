@@ -12,6 +12,7 @@ devtools::install_github("MahdiNouraie/stabplot")
 #loading the installed libarary
 library(stabplot) 
 ```
+---
 `Regustab` function creates a plot that displays stability values in relation to regularization values for LASSO through stability selection. The plot highlights key lambda values, including `lambda.min`, `lambda.1se`, and `lambda.stable`. If `lambda.stable` is not available, the function will display `lambda.stable.1sd` 
 
 A toy example of usage:
@@ -26,6 +27,7 @@ Regustab(x, y, B)
 ```
 ![Regustab Example](man/Regustab.png)
 
+---
 `Convstab` creates a plot displaying stability values along with confidence intervals, against the sequential sub-sampling index within stability selection. This plot aids in monitoring the convergence status of stability values. The function uses `lambda.stable` to generate the plot; if `lambda.stable` is unavailable, it defaults to `lambda.stable.1sd`.
 
 A toy esample odf usage:
@@ -40,6 +42,7 @@ Convstab(x, y, B)
 ```
 ![Regustab Example](man/Convstab.png)
 
+---
 ## References
 
 1. Meinshausen, N., & Bühlmann, P. (2010). Stability selection. Journal of the Royal Statistical Society Series B: Statistical Methodology, 72(4), 417-473.
