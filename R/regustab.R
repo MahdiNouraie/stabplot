@@ -24,9 +24,6 @@ ensure_dependencies <- function() {
   }
 }
 
-library(glmnet)
-library(latex2exp)
-
 selection_matrix <- function(x, y, B){
   p <- ncol(x) # Number of predictors
   cv_lasso <- cv.glmnet(x, y, nfolds = 10, alpha = 1) # Fit LASSO model with 10-fold CV
@@ -106,6 +103,8 @@ getStability <- function(X,alpha=0.05) {
 #' The plot highlights key lambda values, including `lambda.min`, `lambda.1se`, and `lambda.stable`.
 #' If `lambda.stable` is not available, the function will display `lambda.stable.1sd` instead.
 #'
+#' @import glmnet
+#' @import latex2exp
 #' @param x A numeric matrix of predictors.
 #' @param y A numeric vector of response values.
 #' @param B An integer specifying the number of sub-samples.
@@ -132,6 +131,8 @@ getStability <- function(X,alpha=0.05) {
 #' @export
 
 Regustab <- function(x, y, B){
+  library(glmnet)
+  library(latex2exp)
   sel_mats <- selection_matrix(x, y, B)$S_list
   stability_results <- lapply(sel_mats, getStability)
   stab_values <- unlist(lapply(stability_results, function(x) x$stability))

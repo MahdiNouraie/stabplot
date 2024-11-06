@@ -1,11 +1,11 @@
 source("R/Regustab.R")
-library(ggplot2)
 
 #' Convstab
 #'
 #' `Convstab` creates a plot displaying stability values along with confidence intervals, bagainst the sequential sub-sampling index within stability selection. This plot aids in monitoring the convergence status of stability values.
 #' The function uses `lambda.stable` to generate the plot; if `lambda.stable` is unavailable, it defaults to `lambda.stable.1sd`.
 #'
+#' @import ggplot2
 #' @param x A numeric matrix of predictors.
 #' @param y A numeric vector of response values.
 #' @param B An integer specifying the number of sub-samples.
@@ -33,6 +33,7 @@ library(ggplot2)
 #'
 #' @export
 Convstab <- function(x, y, B, alpha = 0.05){
+  library(ggplot2)
   sel_mats <- selection_matrix(x, y, B)$S_list
   stability_results <- lapply(sel_mats, getStability)
   stab_values <- unlist(lapply(stability_results, function(x) x$stability))
