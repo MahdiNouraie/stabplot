@@ -33,10 +33,10 @@ y <- x %*% beta + rnorm(100)
 B <- 10 # number of sub-samples
 Regustab(x, y, B)
 # $min
-#[1] 0.04354162
+#[1] 0.07609021
 
 #$`1se`
-#[1] 0.2323685
+#[1] 0.2550241
 
 #$stable
 #[1] 0.3371269
@@ -58,6 +58,10 @@ y <- x %*% beta + rnorm(100)
 B <- 200 #number of sub-samples
 alpha <- 0.05 #significance level of confidence interval
 Convstab(x, y, B, alpha)
+#  Variable Selection_Frequency
+#1       x1                   1
+#2       x2                   1
+#3       x3                   1
 ```
 ![Regustab Example](man/Convstab.png)
 
