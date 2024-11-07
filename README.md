@@ -57,6 +57,7 @@ beta <- c(5, 4, 3, rep(0, 7))
 y <- x %*% beta + rnorm(100)
 B <- 200 #number of sub-samples
 alpha <- 0.05 #significance level of confidence interval
+thr <- 0.5 # threshold foe selection frequencies
 Convstab(x, y, B, alpha)
 #  Variable Selection_Frequency
 #1       x1                   1
