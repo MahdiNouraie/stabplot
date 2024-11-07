@@ -10,8 +10,9 @@ source("R/Regustab.R")
 #' @param y A numeric vector of response values.
 #' @param B An integer specifying the number of sub-samples.
 #' @param alpha A numeric value specifying the level of significance.
+#' @param thr A numeric value specifying the threshold for selection frequency.
 #'
-#' @return A plot displaying the stability values and corresponding confidence interval through sequential sub-sampling.
+#' @return A plot displaying the stability values and corresponding confidence interval through sequential sub-sampling. `Convstab` also prints the variables selected with a selection frequency greater than the threshold value.
 #' @examples
 #' \dontrun{
 #' set.seed(123)
@@ -21,6 +22,12 @@ source("R/Regustab.R")
 #' y <- x %*% beta + rnorm(100)
 #' B <- 200
 #' Convstab(x, y, B)  # Example usage of the Convstab function
+#' #output
+#'   Variable Selection_Frequency
+#' 1       x1                   1
+#' 2       x2                   1
+#' 3       x3                   1
+#'
 #'}
 #' @references
 #' Meinshausen, N., & Bühlmann, P. (2010). Stability selection. Journal of the Royal Statistical Society Series B: Statistical Methodology, 72(4), 417-473.
@@ -34,13 +41,15 @@ source("R/Regustab.R")
 #' @seealso \link[=stabplot]{stabplot}
 #'
 #' @export
-Convstab <- function(x, y, B, alpha = 0.05){
+Convstab <- function(x, y, B, alpha = 0.05, thr = 0.5){
+  options(warn = -1) # Suppress warnings
   library(ggplot2)
-  sel_mats <- selection_matrix(x, y, B)$S_list
+  SM <- selection_matrix(x, y, B)
+  sel_mats <- SM$S_list
   stability_results <- lapply(sel_mats, getStability)
   stab_values <- unlist(lapply(stability_results, function(x) x$stability))
-  candidate_set <- selection_matrix(x, y, B)$candidate_set
-  cv_lasso <- selection_matrix(x, y, B)$cv_lasso
+  candidate_set <- SM$candidate_set
+  cv_lasso <- SM$cv_lasso
 
   if (max(stab_values) >= 0.75){
     stable_values <- which(stab_values > 0.75) # Index of stable lambda values
@@ -48,6 +57,12 @@ Convstab <- function(x, y, B, alpha = 0.05){
     index_of_lambda_stable <- which(candidate_set == lambda_stable) # Index of lambda_stable
     stability <- data.frame() # Initialize a data frame to store stability values
     Stable_S <- sel_mats[[index_of_lambda_stable]] # Stable selection matrix for lambda_stable
+    colnames(Stable_S) <- paste0('x', 1:ncol(x))
+    # Calculate selection frequencies
+    col_means <- colMeans(Stable_S)
+    # Filter columns with selection frequencies > 0.5 and print their names and means
+    selected_cols <- col_means[col_means > thr]
+    print(data.frame(Variable = names(selected_cols), Selection_Frequency = selected_cols, row.names = NULL))
     for (k in 2:nrow(Stable_S)){ # loop through subsamples results
       output <- getStability(Stable_S[1:k,], alpha) # Compute stability values
       stability <- rbind(stability, data.frame(k, output$stability, output$variance, output$lower, output$upper)) # Append stability values to the data frame
@@ -74,8 +89,14 @@ Convstab <- function(x, y, B, alpha = 0.05){
     index_of_stable_1sd <- max(which(stab_values >= stability_1sd_threshold)) # since candidate_set is in decreasing order,
     #we find the index of the stable.1sd lambda value by maximum index
 
-    S_stable_1sd <- sel_mats[[index_of_stable_1sd]] # Extract the selection matrix for the stable.1sd lambda value
     stability <- data.frame() # Initialize an empty data frame to store stability values
+    S_stable_1sd <- sel_mats[[index_of_stable_1sd]] # Extract the selection matrix for the stable.1sd lambda value
+    colnames(S_stable_1sd) <- paste0('x', 1:ncol(x))
+    # Calculate selection frequencies
+    col_means <- colMeans(S_stable_1sd)
+    # Filter columns with selection frequencies > 0.5 and print their names and means
+    selected_cols <- col_means[col_means > thr]
+    print(data.frame(Variable = names(selected_cols), Selection_Frequency = selected_cols, row.names = NULL))
     for (k in 2:nrow(S_stable_1sd)){ # Loop through sub-samples results for lambda stable.1sd
       output <- getStability(S_stable_1sd[1:k,]) # Compute stability values
       stability <- rbind(stability, data.frame(k, output$stability, output$variance, output$lower, output$upper)) # Append stability values to the data frame

@@ -1,6 +1,6 @@
 #' @docType package
 #' @name stabplot
-#' @title stabplot: Stability Plot
+#' @title stabplot: Stability Plots for Evaluating Stability Selection
 #' @description
 #' This package contains two functions: `Regustab` and `Convstab`.
 #' The `Regustab` function generates a plot showing the relationship between stability values and regularization parameters for LASSO, aiding in the process of regularization tuning via stability selection.
@@ -19,6 +19,7 @@
 
 
 selection_matrix <- function(x, y, B){
+  options(warn = -1) # Suppress warnings
   required_packages <- c("glmnet", "latex2exp", "ggplot2")
   for (pkg in required_packages) {
     if (!requireNamespace(pkg)) {
@@ -110,7 +111,7 @@ getStability <- function(X,alpha=0.05) {
 #' @param y A numeric vector of response values.
 #' @param B An integer specifying the number of sub-samples.
 #'
-#' @return A plot displaying the relationship between lambda values and stability.
+#' @return A plot displaying the relationship between lambda values and stability. `Regustab` also prints the values of `lambda.min`, `lambda.1se`, and `lambda.stable`. If `lambda.stable` is not available, the function will display `lambda.stable.1sd` instead.
 #' @examples
 #' \dontrun{
 #' set.seed(123)
@@ -120,6 +121,14 @@ getStability <- function(X,alpha=0.05) {
 #' y <- x %*% beta + rnorm(100)
 #' B <- 10
 #' Regustab(x, y, B)  # Example usage of the Regustab function
+#' #output
+#' $min
+#' [1] 0.07609021
+#' $`1se`
+#' [1] 0.2550241
+#' $stable
+#' [1] 0.3371269
+#'
 #'}
 #'
 #' @references
@@ -135,11 +144,13 @@ getStability <- function(X,alpha=0.05) {
 #' @export
 
 Regustab <- function(x, y, B){
-  sel_mats <- selection_matrix(x, y, B)$S_list
+  options(warn = -1) # Suppress warnings
+  SM <- selection_matrix(x, y, B)
+  sel_mats <- SM$S_list
   stability_results <- lapply(sel_mats, getStability)
   stab_values <- unlist(lapply(stability_results, function(x) x$stability))
-  candidate_set <- selection_matrix(x, y, B)$candidate_set
-  cv_lasso <- selection_matrix(x, y, B)$cv_lasso
+  candidate_set <- SM$candidate_set
+  cv_lasso <- SM$cv_lasso
 
   par(mgp = c(2.2, 0.6, 0))  # Adjust the second value to control title spacing
   plot(candidate_set, stab_values, type = "l", col = "blue", lwd = 2,

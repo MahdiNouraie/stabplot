@@ -5,7 +5,7 @@
 \alias{-package}
 \alias{stabplot}
 \alias{selection_matrix}
-\title{stabplot: Stability Plot}
+\title{stabplot: Stability Plots for Evaluating Stability Selection}
 \usage{
 selection_matrix(x, y, B)
 }

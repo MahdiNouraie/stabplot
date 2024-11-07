@@ -4,7 +4,7 @@
 \alias{Convstab}
 \title{Convstab}
 \usage{
-Convstab(x, y, B, alpha = 0.05)
+Convstab(x, y, B, alpha = 0.05, thr = 0.5)
 }
 \arguments{
 \item{x}{A numeric matrix of predictors.}
@@ -14,9 +14,11 @@ Convstab(x, y, B, alpha = 0.05)
 \item{B}{An integer specifying the number of sub-samples.}
 
 \item{alpha}{A numeric value specifying the level of significance.}
+
+\item{thr}{A numeric value specifying the threshold for selection frequency.}
 }
 \value{
-A plot displaying the stability values and corresponding confidence interval through sequential sub-sampling.
+A plot displaying the stability values and corresponding confidence interval through sequential sub-sampling. `Convstab` also prints the variables selected with a selection frequency greater than the threshold value.
 }
 \description{
 `Convstab` creates a plot displaying stability values along with confidence intervals, against the sequential sub-sampling index within stability selection. This plot aids in monitoring the convergence status of stability values.
@@ -31,6 +33,12 @@ beta <- c(5, 4, 3, rep(0, 7))
 y <- x \%*\% beta + rnorm(100)
 B <- 200
 Convstab(x, y, B)  # Example usage of the Convstab function
+#output
+  Variable Selection_Frequency
+1       x1                   1
+2       x2                   1
+3       x3                   1
+
 }
 }
 \references{

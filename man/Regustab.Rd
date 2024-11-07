@@ -14,7 +14,7 @@ Regustab(x, y, B)
 \item{B}{An integer specifying the number of sub-samples.}
 }
 \value{
-A plot displaying the relationship between lambda values and stability.
+A plot displaying the relationship between lambda values and stability. `Regustab` also prints the values of `lambda.min`, `lambda.1se`, and `lambda.stable`. If `lambda.stable` is not available, the function will display `lambda.stable.1sd` instead.
 }
 \description{
 This function creates a plot that displays stability values in relation to regularization values for LASSO through stability selection.
@@ -29,6 +29,14 @@ beta <- c(1, 2, 3, rep(0, 7))
 y <- x \%*\% beta + rnorm(100)
 B <- 10
 Regustab(x, y, B)  # Example usage of the Regustab function
+#output
+$min
+[1] 0.07609021
+$`1se`
+[1] 0.2550241
+$stable
+[1] 0.3371269
+
 }
 
 }
