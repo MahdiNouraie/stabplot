@@ -4,7 +4,11 @@
 #' @description
 #' This package contains two functions: `Regustab` and `Convstab`.
 #' The `Regustab` function generates a plot showing the relationship between stability values and regularization parameters for LASSO, aiding in the process of regularization tuning via stability selection.
-#' The `Convstab` function creates a plot of stability values against index of the iterative sub-sampling, helping to monitor the convergence of these values over time.
+#' The `Convstab` function creates a plot of stability values against index of the iterative sub-sampling, helping to monitor the convergence of stability values over time.
+#' `Regustab` also prints the values of highlighted regularization parameters on the plot (`lambda.min`, `lambda.1se`, `lambda.stable` if applicable, otherwise, `lambda.stable.1sd`).
+#' `Convstab` also prints the variables with selection frequencies above a specified threshold (default threshold = 0.5).
+#' @usage Regustab(x, y, B)
+#' @usage Convstab(x, y, B)
 #' @author Mahdi Nouraie (mahdinouraie20@gmail.com)
 #' @references
 #' Meinshausen, N., & Bühlmann, P. (2010). Stability selection. Journal of the Royal Statistical Society Series B: Statistical Methodology, 72(4), 417-473.

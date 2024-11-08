@@ -18,15 +18,14 @@ source("R/Regustab.R")
 #' set.seed(123)
 #' x <- matrix(rnorm(1000), ncol = 10)
 #' # create beta based on the first 3 columns of x and some error
-#' beta <- c(5, 4, 3, rep(0, 7))
+#' beta <- c(0.5, 0.4, 0.3, rep(0, 7))
 #' y <- x %*% beta + rnorm(100)
 #' B <- 200
 #' Convstab(x, y, B)  # Example usage of the Convstab function
 #' #output
-#'   Variable Selection_Frequency
-#' 1       x1                   1
-#' 2       x2                   1
-#' 3       x3                   1
+#' #Variable Selection_Frequency
+#' #1       x1               0.970
+#' #2       x2               0.895
 #'
 #'}
 #' @references
