@@ -41,7 +41,7 @@ Regustab(x, y, B)
 #$stable
 #[1] 0.3371269
 ```
-![Regustab Example](man/Regustab.png)
+![Regustab Example](man/regustab.png)
 
 ---
 ## Convstab
