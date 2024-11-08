@@ -63,7 +63,7 @@ Convstab(x, y, B, alpha, thr)
 #1       x1               0.970
 #2       x2               0.895
 ```
-![Regustab Example](man/Convstab.png)
+![Regustab Example](man/convstab.png)
 
 ---
 ## References
