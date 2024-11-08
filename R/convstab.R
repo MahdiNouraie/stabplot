@@ -56,18 +56,17 @@ Convstab <- function(x, y, B, alpha = 0.05, thr = 0.5){
     index_of_lambda_stable <- which(candidate_set == lambda_stable) # Index of lambda_stable
     stability <- data.frame() # Initialize a data frame to store stability values
     Stable_S <- sel_mats[[index_of_lambda_stable]] # Stable selection matrix for lambda_stable
+    for (k in 2:nrow(Stable_S)){ # loop through subsamples results
+      output <- getStability(Stable_S[1:k,], alpha) # Compute stability values
+      stability <- rbind(stability, data.frame(k, output$stability, output$variance, output$lower, output$upper)) # Append stability values to the data frame
+    }
+    colnames(stability) <- c('Iteration', 'Stability', 'Variance', 'Lower', 'Upper') # Set column names of the data frame
     colnames(Stable_S) <- paste0('x', 1:ncol(x))
     # Calculate selection frequencies
     col_means <- colMeans(Stable_S)
     # Filter columns with selection frequencies > 0.5 and print their names and means
     selected_cols <- col_means[col_means > thr]
     print(data.frame(Variable = names(selected_cols), Selection_Frequency = selected_cols, row.names = NULL))
-    for (k in 2:nrow(Stable_S)){ # loop through subsamples results
-      output <- getStability(Stable_S[1:k,], alpha) # Compute stability values
-      stability <- rbind(stability, data.frame(k, output$stability, output$variance, output$lower, output$upper)) # Append stability values to the data frame
-    }
-    colnames(stability) <- c('Iteration', 'Stability', 'Variance', 'Lower', 'Upper') # Set column names of the data frame
-
     ggplot(stability, aes(x = Iteration, y = Stability)) +
       geom_line() +
       geom_ribbon(aes(ymin = Lower, ymax = Upper), fill = 'blue', alpha = 0.7) + # Add ribbon for confidence interval
@@ -87,7 +86,6 @@ Convstab <- function(x, y, B, alpha = 0.05, thr = 0.5){
     stability_1sd_threshold <- max_stability - sd(stab_values) # Define the stability threshold as max stability - 1SD
     index_of_stable_1sd <- max(which(stab_values >= stability_1sd_threshold)) # since candidate_set is in decreasing order,
     #we find the index of the stable.1sd lambda value by maximum index
-
     stability <- data.frame() # Initialize an empty data frame to store stability values
     S_stable_1sd <- sel_mats[[index_of_stable_1sd]] # Extract the selection matrix for the stable.1sd lambda value
     for (k in 2:nrow(S_stable_1sd)){ # Loop through sub-samples results for lambda stable.1sd
