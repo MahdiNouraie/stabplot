@@ -53,16 +53,15 @@ A toy esample odf usage:
 set.seed(123) # for reproducibility
 x <- matrix(rnorm(1000), ncol = 10)
 # create beta based on the first 3 columns of x and some error
-beta <- c(5, 4, 3, rep(0, 7))
+beta <- c(0.5, 0.4, 0.3, rep(0, 7))
 y <- x %*% beta + rnorm(100)
 B <- 200 #number of sub-samples
 alpha <- 0.05 #significance level of confidence interval
 thr <- 0.5 # threshold for filtering variables based on their selection frequencies
 Convstab(x, y, B, alpha, thr)
 #  Variable Selection_Frequency
-#1       x1                   1
-#2       x2                   1
-#3       x3                   1
+#1       x1               0.970
+#2       x2               0.895
 ```
 ![Regustab Example](man/Convstab.png)
 
