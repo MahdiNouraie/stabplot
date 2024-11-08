@@ -56,12 +56,6 @@ Convstab <- function(x, y, B, alpha = 0.05, thr = 0.5){
     index_of_lambda_stable <- which(candidate_set == lambda_stable) # Index of lambda_stable
     stability <- data.frame() # Initialize a data frame to store stability values
     Stable_S <- sel_mats[[index_of_lambda_stable]] # Stable selection matrix for lambda_stable
-    colnames(Stable_S) <- paste0('x', 1:ncol(x))
-    # Calculate selection frequencies
-    col_means <- colMeans(Stable_S)
-    # Filter columns with selection frequencies > 0.5 and print their names and means
-    selected_cols <- col_means[col_means > thr]
-    print(data.frame(Variable = names(selected_cols), Selection_Frequency = selected_cols, row.names = NULL))
     for (k in 2:nrow(Stable_S)){ # loop through subsamples results
       output <- getStability(Stable_S[1:k,], alpha) # Compute stability values
       stability <- rbind(stability, data.frame(k, output$stability, output$variance, output$lower, output$upper)) # Append stability values to the data frame
@@ -81,6 +75,12 @@ Convstab <- function(x, y, B, alpha = 0.05, thr = 0.5){
         axis.text.x = element_text(size = 16),      # X-axis tick text size
         axis.text.y = element_text(size = 16)       # Y-axis tick text size
       )
+    colnames(Stable_S) <- paste0('x', 1:ncol(x))
+    # Calculate selection frequencies
+    col_means <- colMeans(Stable_S)
+    # Filter columns with selection frequencies > 0.5 and print their names and means
+    selected_cols <- col_means[col_means > thr]
+    print(data.frame(Variable = names(selected_cols), Selection_Frequency = selected_cols, row.names = NULL))
   }
   else{
     max_stability <- max(stab_values) # Find the maximum stability value
@@ -90,12 +90,6 @@ Convstab <- function(x, y, B, alpha = 0.05, thr = 0.5){
 
     stability <- data.frame() # Initialize an empty data frame to store stability values
     S_stable_1sd <- sel_mats[[index_of_stable_1sd]] # Extract the selection matrix for the stable.1sd lambda value
-    colnames(S_stable_1sd) <- paste0('x', 1:ncol(x))
-    # Calculate selection frequencies
-    col_means <- colMeans(S_stable_1sd)
-    # Filter columns with selection frequencies > 0.5 and print their names and means
-    selected_cols <- col_means[col_means > thr]
-    print(data.frame(Variable = names(selected_cols), Selection_Frequency = selected_cols, row.names = NULL))
     for (k in 2:nrow(S_stable_1sd)){ # Loop through sub-samples results for lambda stable.1sd
       output <- getStability(S_stable_1sd[1:k,]) # Compute stability values
       stability <- rbind(stability, data.frame(k, output$stability, output$variance, output$lower, output$upper)) # Append stability values to the data frame
@@ -114,6 +108,12 @@ Convstab <- function(x, y, B, alpha = 0.05, thr = 0.5){
         axis.text.x = element_text(size = 16),      # X-axis tick text size
         axis.text.y = element_text(size = 16)       # Y-axis tick text size
       )
+    colnames(S_stable_1sd) <- paste0('x', 1:ncol(x))
+    # Calculate selection frequencies
+    col_means <- colMeans(S_stable_1sd)
+    # Filter columns with selection frequencies > 0.5 and print their names and means
+    selected_cols <- col_means[col_means > thr]
+    print(data.frame(Variable = names(selected_cols), Selection_Frequency = selected_cols, row.names = NULL))
   }
 }
 
