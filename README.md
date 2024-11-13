@@ -12,8 +12,8 @@ You can install the latest version of `stabplot` from GitHub:
 
 ```r
 if (!require("devtools")){install.packages("devtools")} #installing devtools if it is not already installed
-devtools::install_github("MahdiNouraie/stabplot")
-library(stabplot) #loading the installed libarary
+devtools::install_github("MahdiNouraie/stabplot") #installing stabplot
+library(stabplot) #loading stabplot
 ```
 ---
 ## Regustab
