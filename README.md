@@ -11,10 +11,9 @@ The `stabplot` package depends on `glmnet`, `ggplot2`, and `latex2exp` packages.
 You can install the latest version of `stabplot` from GitHub:
 
 ```r
-# install.packages("devtools")  # Uncomment if you haven't installed devtools
+if (!require("devtools")){install.packages("devtools")} #installing devtools if it is not already installed
 devtools::install_github("MahdiNouraie/stabplot")
-#loading the installed libarary
-library(stabplot) 
+library(stabplot) #loading the installed libarary
 ```
 ---
 ## Regustab
