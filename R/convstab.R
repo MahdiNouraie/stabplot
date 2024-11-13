@@ -1,4 +1,4 @@
-source("R/Regustab.R")
+source("R/regustab.R")
 
 #' Convstab
 #'
