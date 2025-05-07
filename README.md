@@ -47,7 +47,7 @@ Regustab(x, y, B)
 
 `Convstab` creates a plot displaying stability values along with confidence intervals, against the sequential sub-sampling index within stability selection. This plot aids in monitoring the convergence status of stability values. The function uses `lambda.stable` to generate the plot; if `lambda.stable` is unavailable, it defaults to `lambda.stable.1sd`.
 
-A toy esample odf usage:
+A toy esample of usage:
 ```r
 set.seed(123) # for reproducibility
 x <- matrix(rnorm(1000), ncol = 10)
