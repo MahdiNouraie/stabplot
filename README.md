@@ -1,7 +1,7 @@
 # stabplot
 
 `stabplot` is an R package designed to facilitate regularization tuning and convergence monitoring in stability selection using LASSO. It provides two core functions, `Regustab` and `Convstab`, which help visualize stability in regularized models, supporting users in selecting appropriate regularization parameters and assessing convergence.
-Help functions are available through R by `?stabplot`, `?Regustab`, and `?Convstab`.
+Help functions are available through R by `?stabplot`, `?Regustab`, and `?Convstab`. [Preprint Paper](https://arxiv.org/pdf/2411.09097?)
 
 The `stabplot` package depends on `glmnet`, `ggplot2`, and `latex2exp` packages.
 
@@ -47,7 +47,7 @@ Regustab(x, y, B)
 
 `Convstab` creates a plot displaying stability values along with confidence intervals, against the sequential sub-sampling index within stability selection. This plot aids in monitoring the convergence status of stability values. The function uses `lambda.stable` to generate the plot; if `lambda.stable` is unavailable, it defaults to `lambda.stable.1sd`.
 
-A toy esample odf usage:
+A toy esample of usage:
 ```r
 set.seed(123) # for reproducibility
 x <- matrix(rnorm(1000), ncol = 10)
@@ -70,7 +70,7 @@ Convstab(x, y, B, alpha, thr)
 1. Meinshausen, N., & Bühlmann, P. (2010). Stability selection. Journal of the Royal Statistical Society Series B: Statistical Methodology, 72(4), 417-473.
 2. Nogueira, S., Sechidis, K., & Brown, G. (2018). On the stability of feature selection algorithms. Journal of Machine Learning Research, 18(174), 1-54.
 3. [GitHub repository of Nogueira et al (2018)](https://github.com/nogueirs/JMLR2018)
-4. Tibshirani, R. (1996). Regression shrinkage and selection via the lasso. Journal of the Royal Statistical Society Series B: Statistical Methodology, 58(1), 267-288.
+4. Tibshirani, R. (1996). Regression shrinkage and selection via the Lasso. Journal of the Royal Statistical Society Series B: Statistical Methodology, 58(1), 267-288.
 
 
 
