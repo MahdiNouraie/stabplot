@@ -178,7 +178,7 @@ Regustab <- function(x, y, B){
          col = "red", pch = 19, cex = 2) # Show by red dot index_of_1se and stab_values[index_of_1se] on the plot
   text(candidate_set[index_of_1se], stab_values[index_of_1se], "1se",
        pos = 1, col = "red", cex = 1.5) # Add text for lambda.1se
-  if (max(stab_values) >= 0.75){
+  if (max(stab_values, na.rm = TRUE) >= 0.75){
   stable_values <- which(stab_values > 0.75) # Index of stable lambda values
   lambda_stable <- min(candidate_set[stable_values]) # Minimum stable lambda value
   index_of_lambda_stable <- which(candidate_set == lambda_stable) # Index of lambda_stable
@@ -189,9 +189,9 @@ Regustab <- function(x, y, B){
   print(list('min' = cv_lasso$lambda.min, '1se' = cv_lasso$lambda.1se, 'stable' = lambda_stable))
   }
   else{
-    max_stability <- max(stab_values) # Find the maximum stability value
-    stability_1sd_threshold <- max_stability - sd(stab_values) # Define the stability threshold as max stability - 1SD
-    index_of_stable_1sd <- max(which(stab_values >= stability_1sd_threshold)) # since candidate values are sorted decreasingly,
+    max_stability <- max(stab_values, na.rm = TRUE) # Find the maximum stability value
+    stability_1sd_threshold <- max_stability - sd(stab_values, na.rm = TRUE) # Define the stability threshold as max stability - 1SD
+    index_of_stable_1sd <- max(which(stab_values >= stability_1sd_threshold), na.rm = TRUE) # since candidate values are sorted decreasingly,
     #we take the last index to get the minimum value
     points(candidate_set[index_of_stable_1sd], stab_values[index_of_stable_1sd],
            col = "red", pch = 19, cex = 2) # Show by red dot index_of_stable_1sd and stab_values[index_of_stable_1sd] on the plot

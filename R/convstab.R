@@ -50,7 +50,7 @@ Convstab <- function(x, y, B, alpha = 0.05, thr = 0.5){
   candidate_set <- SM$candidate_set
   cv_lasso <- SM$cv_lasso
 
-  if (max(stab_values) >= 0.75){
+  if (max(stab_values, na.rm = TRUE) >= 0.75){
     stable_values <- which(stab_values > 0.75) # Index of stable lambda values
     lambda_stable <- min(candidate_set[stable_values]) # Minimum stable lambda value
     index_of_lambda_stable <- which(candidate_set == lambda_stable) # Index of lambda_stable
@@ -82,9 +82,9 @@ Convstab <- function(x, y, B, alpha = 0.05, thr = 0.5){
       )
   }
   else{
-    max_stability <- max(stab_values) # Find the maximum stability value
-    stability_1sd_threshold <- max_stability - sd(stab_values) # Define the stability threshold as max stability - 1SD
-    index_of_stable_1sd <- max(which(stab_values >= stability_1sd_threshold)) # since candidate_set is in decreasing order,
+    max_stability <- max(stab_values, na.rm = TRUE) # Find the maximum stability value
+    stability_1sd_threshold <- max_stability - sd(stab_values, na.rm = TRUE) # Define the stability threshold as max stability - 1SD
+    index_of_stable_1sd <- max(which(stab_values >= stability_1sd_threshold), na.rm = TRUE) # since candidate_set is in decreasing order,
     #we find the index of the stable.1sd lambda value by maximum index
     stability <- data.frame() # Initialize an empty data frame to store stability values
     S_stable_1sd <- sel_mats[[index_of_stable_1sd]] # Extract the selection matrix for the stable.1sd lambda value
