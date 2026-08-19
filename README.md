@@ -1,6 +1,6 @@
 # stabplot
 
-`stabplot` is an R package designed to facilitate regularization tuning and convergence monitoring in stability selection using LASSO. It provides two core functions, `Regustab` and `Convstab`, which help visualize stability in regularized models, supporting users in selecting appropriate regularization parameters and assessing convergence.
+`stabplot` is an R package designed to facilitate regularization tuning and convergence monitoring in stability selection using Lasso. It provides two core functions, `Regustab` and `Convstab`, which help visualize stability in regularized models, supporting users in selecting appropriate regularization parameters and assessing convergence.
 Help functions are available through R by `?stabplot`, `?Regustab`, and `?Convstab`. [Preprint Paper](https://arxiv.org/pdf/2411.09097?)
 
 The `stabplot` package depends on `glmnet`, `ggplot2`, and `latex2exp` packages.
@@ -18,7 +18,7 @@ library(stabplot) #loading stabplot
 ---
 ## Regustab
 
-`Regustab` function creates a plot that displays stability values in relation to regularization values for LASSO through stability selection. The plot highlights key lambda values, including `lambda.min`, `lambda.1se`, and `lambda.stable`. If `lambda.stable` is not available, the function will display `lambda.stable.1sd`.
+`Regustab` function creates a plot that displays stability values in relation to regularization values for Lasso through stability selection. The plot highlights key lambda values, including `lambda.min`, `lambda.1se`, and `lambda.stable`. If `lambda.stable` is not available, the function will display `lambda.stable.1sd`.
 
 `Regustab` also prints the values of highlighted regularization values on the plot (`lambda.min`, `lambda.1se`, and `lambda.stable` or `lambda.stable.1sd`).
 
