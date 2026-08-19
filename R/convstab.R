@@ -1,18 +1,22 @@
-source("R/regustab.R")
-
+utils::globalVariables(c("Iteration", "Stability", "Lower", "Upper"))
 #' Convstab
 #'
-#' `Convstab` creates a plot displaying stability values along with confidence intervals, against the sequential sub-sampling index within stability selection. This plot aids in monitoring the convergence status of stability values.
-#' The function uses `lambda.stable` to generate the plot; if `lambda.stable` is unavailable, it defaults to `lambda.stable.1sd`.
+#' Creates a diagnostic plot of stability estimates and their confidence
+#' intervals across sequential subsamples in stability selection. The plot
+#' is constructed using `lambda.stable` when the maximum stability exceeds
+#' 0.75; otherwise, `lambda.stable.1sd` is used.
 #'
-#' @import ggplot2
 #' @param x A numeric matrix of predictors.
 #' @param y A numeric vector of response values.
-#' @param B An integer specifying the number of sub-samples.
-#' @param alpha A numeric value specifying the level of significance.
-#' @param thr A numeric value specifying the threshold for selection frequency.
+#' @param B An integer specifying the number of subsamples.
+#' @param alpha A numeric value specifying the significance level for the
+#'   confidence intervals.
+#' @param thr A numeric value specifying the minimum selection frequency
+#'   for reporting selected variables.
 #'
-#' @return A plot displaying the stability values and corresponding confidence interval through sequential sub-sampling. `Convstab` also prints the variables selected with a selection frequency greater than the threshold value.
+#' @return A stability plot showing the stability estimates and corresponding
+#' confidence intervals across sequential subsamples. The function also
+#' prints the variables whose selection frequencies exceed `thr`.
 #' @examples
 #' \dontrun{
 #' set.seed(123)
@@ -29,6 +33,8 @@ source("R/regustab.R")
 #'
 #'}
 #' @references
+#' Nouraie, M., & Muller, S. (2026). Stability-guided hyper-parameter tuning for stability selection. Communications in Statistics - Theory and Methods, 1–19.
+#'
 #' Meinshausen, N., & Bühlmann, P. (2010). Stability selection. Journal of the Royal Statistical Society Series B: Statistical Methodology, 72(4), 417-473.
 #'
 #' Nogueira, S., Sechidis, K., & Brown, G. (2018). On the stability of feature selection algorithms. Journal of Machine Learning Research, 18(174), 1-54.
@@ -41,17 +47,14 @@ source("R/regustab.R")
 #'
 #' @export
 Convstab <- function(x, y, B, alpha = 0.05, thr = 0.5){
-  options(warn = -1) # Suppress warnings
-  library(ggplot2)
   SM <- selection_matrix(x, y, B)
   sel_mats <- SM$S_list
   stability_results <- lapply(sel_mats, getStability)
   stab_values <- unlist(lapply(stability_results, function(x) x$stability))
   candidate_set <- SM$candidate_set
-  cv_lasso <- SM$cv_lasso
 
   if (max(stab_values, na.rm = TRUE) >= 0.75){
-    stable_values <- which(stab_values > 0.75) # Index of stable lambda values
+    stable_values <- which(stab_values >= 0.75) # Index of stable lambda values
     lambda_stable <- min(candidate_set[stable_values]) # Minimum stable lambda value
     index_of_lambda_stable <- which(candidate_set == lambda_stable) # Index of lambda_stable
     stability <- data.frame() # Initialize a data frame to store stability values
@@ -64,26 +67,26 @@ Convstab <- function(x, y, B, alpha = 0.05, thr = 0.5){
     colnames(Stable_S) <- paste0('x', 1:ncol(x))
     # Calculate selection frequencies
     col_means <- colMeans(Stable_S)
-    # Filter columns with selection frequencies > 0.5 and print their names and means
+    # Filter columns with selection frequencies > thr and print their names and means
     selected_cols <- col_means[col_means > thr]
     print(data.frame(Variable = names(selected_cols), Selection_Frequency = selected_cols, row.names = NULL))
-    ggplot(stability, aes(x = Iteration, y = Stability)) +
-      geom_line() +
-      geom_ribbon(aes(ymin = Lower, ymax = Upper), fill = 'blue', alpha = 0.7) + # Add ribbon for confidence interval
-      labs(title = TeX('Stability of Stability Selection ($\\lambda = \\lambda_{stable}$)'),
-           x = 'Iteration (sub-sample)', y = TeX('Stability ($\\hat{\\Phi}$)'))+
-      theme_bw() +
-      theme(
-        plot.title = element_text(size = 20),       # Title text size
-        axis.title.x = element_text(size = 18),     # X-axis label size
-        axis.title.y = element_text(size = 18),     # Y-axis label size
-        axis.text.x = element_text(size = 16),      # X-axis tick text size
-        axis.text.y = element_text(size = 16)       # Y-axis tick text size
+    ggplot2::ggplot(stability, ggplot2::aes(x = Iteration, y = Stability)) +
+      ggplot2::geom_line() +
+      ggplot2::geom_ribbon(ggplot2::aes(ymin = Lower, ymax = Upper), fill = 'blue', alpha = 0.7) + # Add ribbon for confidence interval
+      ggplot2::labs(title = latex2exp::TeX('Stability of Stability Selection ($\\lambda = \\lambda_{stable}$)'),
+           x = 'Iteration (sub-sample)', y = latex2exp::TeX('Stability ($\\hat{\\Phi}$)'))+
+      ggplot2::theme_bw() +
+      ggplot2::theme(
+        plot.title = ggplot2::element_text(size = 20),       # Title text size
+        axis.title.x = ggplot2::element_text(size = 18),     # X-axis label size
+        axis.title.y = ggplot2::element_text(size = 18),     # Y-axis label size
+        axis.text.x = ggplot2::element_text(size = 16),      # X-axis tick text size
+        axis.text.y = ggplot2::element_text(size = 16)       # Y-axis tick text size
       )
   }
   else{
     max_stability <- max(stab_values, na.rm = TRUE) # Find the maximum stability value
-    stability_1sd_threshold <- max_stability - sd(stab_values, na.rm = TRUE) # Define the stability threshold as max stability - 1SD
+    stability_1sd_threshold <- max_stability - stats::sd(stab_values, na.rm = TRUE) # Define the stability threshold as max stability - 1SD
     index_of_stable_1sd <- max(which(stab_values >= stability_1sd_threshold), na.rm = TRUE) # since candidate_set is in decreasing order,
     #we find the index of the stable.1sd lambda value by maximum index
     stability <- data.frame() # Initialize an empty data frame to store stability values
@@ -96,21 +99,21 @@ Convstab <- function(x, y, B, alpha = 0.05, thr = 0.5){
     colnames(S_stable_1sd) <- paste0('x', 1:ncol(x))
     # Calculate selection frequencies
     col_means <- colMeans(S_stable_1sd)
-    # Filter columns with selection frequencies > 0.5 and print their names and means
+    # Filter columns with selection frequencies > thr and print their names and means
     selected_cols <- col_means[col_means > thr]
     print(data.frame(Variable = names(selected_cols), Selection_Frequency = selected_cols, row.names = NULL))
-    ggplot(stability, aes(x = Iteration, y = Stability)) +
-      geom_line() +
-      geom_ribbon(aes(ymin = Lower, ymax = Upper), fill = 'blue', alpha = 0.7) + # Add ribbon for confidence interval
-      labs(title = TeX('Stability of Stability Selection ($\\lambda = \\lambda_{stable.1sd}$)'),
-           x = 'Iteration (sub-sample)', y = TeX('Stability ($\\hat{\\Phi}$)'))+
-      theme_bw() +
-      theme(
-        plot.title = element_text(size = 20),       # Title text size
-        axis.title.x = element_text(size = 18),     # X-axis label size
-        axis.title.y = element_text(size = 18),     # Y-axis label size
-        axis.text.x = element_text(size = 16),      # X-axis tick text size
-        axis.text.y = element_text(size = 16)       # Y-axis tick text size
+    ggplot2::ggplot(stability, ggplot2::aes(x = Iteration, y = Stability)) +
+      ggplot2::geom_line() +
+      ggplot2::geom_ribbon(ggplot2::aes(ymin = Lower, ymax = Upper), fill = 'blue', alpha = 0.7) + # Add ribbon for confidence interval
+      ggplot2::labs(title = latex2exp::TeX('Stability of Stability Selection ($\\lambda = \\lambda_{stable.1sd}$)'),
+           x = 'Iteration (sub-sample)', y = latex2exp::TeX('Stability ($\\hat{\\Phi}$)'))+
+      ggplot2::theme_bw() +
+      ggplot2::theme(
+        plot.title = ggplot2::element_text(size = 20),       # Title text size
+        axis.title.x = ggplot2::element_text(size = 18),     # X-axis label size
+        axis.title.y = ggplot2::element_text(size = 18),     # Y-axis label size
+        axis.text.x = ggplot2::element_text(size = 16),      # X-axis tick text size
+        axis.text.y = ggplot2::element_text(size = 16)       # Y-axis tick text size
       )
   }
 }

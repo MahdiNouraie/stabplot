@@ -11,18 +11,24 @@ Convstab(x, y, B, alpha = 0.05, thr = 0.5)
 
 \item{y}{A numeric vector of response values.}
 
-\item{B}{An integer specifying the number of sub-samples.}
+\item{B}{An integer specifying the number of subsamples.}
 
-\item{alpha}{A numeric value specifying the level of significance.}
+\item{alpha}{A numeric value specifying the significance level for the
+confidence intervals.}
 
-\item{thr}{A numeric value specifying the threshold for selection frequency.}
+\item{thr}{A numeric value specifying the minimum selection frequency
+for reporting selected variables.}
 }
 \value{
-A plot displaying the stability values and corresponding confidence interval through sequential sub-sampling. `Convstab` also prints the variables selected with a selection frequency greater than the threshold value.
+A stability plot showing the stability estimates and corresponding
+confidence intervals across sequential subsamples. The function also
+prints the variables whose selection frequencies exceed `thr`.
 }
 \description{
-`Convstab` creates a plot displaying stability values along with confidence intervals, against the sequential sub-sampling index within stability selection. This plot aids in monitoring the convergence status of stability values.
-The function uses `lambda.stable` to generate the plot; if `lambda.stable` is unavailable, it defaults to `lambda.stable.1sd`.
+Creates a diagnostic plot of stability estimates and their confidence
+intervals across sequential subsamples in stability selection. The plot
+is constructed using `lambda.stable` when the maximum stability exceeds
+0.75; otherwise, `lambda.stable.1sd` is used.
 }
 \examples{
 \dontrun{
@@ -41,6 +47,8 @@ Convstab(x, y, B)  # Example usage of the Convstab function
 }
 }
 \references{
+Nouraie, M., & Muller, S. (2026). Stability-guided hyper-parameter tuning for stability selection. Communications in Statistics - Theory and Methods, 1–19.
+
 Meinshausen, N., & Bühlmann, P. (2010). Stability selection. Journal of the Royal Statistical Society Series B: Statistical Methodology, 72(4), 417-473.
 
 Nogueira, S., Sechidis, K., & Brown, G. (2018). On the stability of feature selection algorithms. Journal of Machine Learning Research, 18(174), 1-54.

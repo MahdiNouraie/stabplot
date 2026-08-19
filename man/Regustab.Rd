@@ -11,14 +11,22 @@ Regustab(x, y, B)
 
 \item{y}{A numeric vector of response values.}
 
-\item{B}{An integer specifying the number of sub-samples.}
+\item{B}{An integer specifying the number of subsamples.}
 }
 \value{
-A plot displaying the relationship between lambda values and stability. `Regustab` also prints the values of `lambda.min`, `lambda.1se`, and `lambda.stable`. If `lambda.stable` is not available, the function will display `lambda.stable.1sd` instead.
+A stability plot showing the relationship between the
+regularisation parameter and the stability estimate, with
+`lambda.min`, `lambda.1se`, and either `lambda.stable` or
+`lambda.stable.1sd` highlighted. The selected regularisation values
+are also printed to the console.
 }
 \description{
-This function creates a plot that displays stability values in relation to regularization values for LASSO through stability selection.
-The plot highlights key lambda values, including `lambda.min`, `lambda.1se`, and `lambda.stable`. If `lambda.stable` is not available, the function will display `lambda.stable.1sd` instead. Regustab also prints the values of highlighted regularization values on the plot (`lambda.min`, `lambda.1se`, and `lambda.stable` or `lambda.stable.1sd`).
+Creates a diagnostic plot of stability values across the regularisation
+parameter grid for Lasso stability selection. The plot highlights
+`lambda.min` and `lambda.1se` from cross-validation, as well as
+`lambda.stable` when the maximum stability exceeds 0.75. Otherwise,
+`lambda.stable.1sd`, defined using a one-standard-deviation criterion,
+is highlighted.
 }
 \examples{
 \dontrun{
@@ -41,11 +49,13 @@ $stable
 
 }
 \references{
+Nouraie, M., & Muller, S. (2026). Stability-guided hyper-parameter tuning for stability selection. Communications in Statistics - Theory and Methods, 1–19.
+
 Meinshausen, N., & Bühlmann, P. (2010). Stability selection. Journal of the Royal Statistical Society Series B: Statistical Methodology, 72(4), 417-473.
 
 Nogueira, S., Sechidis, K., & Brown, G. (2018). On the stability of feature selection algorithms. Journal of Machine Learning Research, 18(174), 1-54.
 
-https://github.com/nogueirs/JMLR2018
+\url{https://github.com/nogueirs/JMLR2018}
 
 Tibshirani, R. (1996). Regression shrinkage and selection via the lasso. Journal of the Royal Statistical Society Series B: Statistical Methodology, 58(1), 267-288.
 }
