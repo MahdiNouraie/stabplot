@@ -185,7 +185,7 @@ Regustab <- function(x, y, B){
   graphics::text(candidate_set[index_of_1se], stab_values[index_of_1se], "1se",
        pos = 1, col = "red", cex = 1.5) # Add text for lambda.1se
   if (max(stab_values, na.rm = TRUE) >= 0.75){
-  stable_values <- which(stab_values > 0.75) # Index of stable lambda values
+  stable_values <- which(stab_values >= 0.75) # Index of stable lambda values
   lambda_stable <- min(candidate_set[stable_values]) # Minimum stable lambda value
   index_of_lambda_stable <- which(candidate_set == lambda_stable) # Index of lambda_stable
   graphics::points(candidate_set[index_of_lambda_stable], stab_values[index_of_lambda_stable],

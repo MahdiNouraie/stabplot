@@ -1,7 +1,7 @@
 # stabplot
 
-`stabplot` is an R package designed to facilitate regularization tuning and convergence monitoring in stability selection using Lasso. It provides two core functions, `Regustab` and `Convstab`, which help visualize stability in regularized models, supporting users in selecting appropriate regularization parameters and assessing convergence.
-Help functions are available through R by `?stabplot`, `?Regustab`, and `?Convstab`. [Preprint Paper](https://arxiv.org/pdf/2411.09097?)
+`stabplot` is an R package designed to facilitate regularisation tuning and convergence monitoring in stability selection using Lasso. It provides two core functions, `Regustab` and `Convstab`, which help visualise stability in regularised models, supporting users in selecting appropriate regularisation parameters and assessing convergence.
+Help functions are available through R by `?stabplot`, `?Regustab`, and `?Convstab`. [Paper](https://www.tandfonline.com/doi/full/10.1080/03610926.2026.2715517)
 
 The `stabplot` package depends on `glmnet`, `ggplot2`, and `latex2exp` packages.
 
@@ -18,9 +18,9 @@ library(stabplot) #loading stabplot
 ---
 ## Regustab
 
-`Regustab` function creates a plot that displays stability values in relation to regularization values for Lasso through stability selection. The plot highlights key lambda values, including `lambda.min`, `lambda.1se`, and `lambda.stable`. If `lambda.stable` is not available, the function will display `lambda.stable.1sd`.
+`Regustab` function creates a plot that displays stability values in relation to regularisation values for Lasso through stability selection. The plot highlights key lambda values, including `lambda.min`, `lambda.1se`, and `lambda.stable`. If `lambda.stable` is not available, the function will display `lambda.stable.1sd`.
 
-`Regustab` also prints the values of highlighted regularization values on the plot (`lambda.min`, `lambda.1se`, and `lambda.stable` or `lambda.stable.1sd`).
+`Regustab` also prints the values of highlighted regularisation values on the plot (`lambda.min`, `lambda.1se`, and `lambda.stable` or `lambda.stable.1sd`).
 
 A toy example of usage:
 ```r
@@ -67,10 +67,11 @@ Convstab(x, y, B, alpha, thr)
 ---
 ## References
 
-1. Meinshausen, N., & Bühlmann, P. (2010). Stability selection. Journal of the Royal Statistical Society Series B: Statistical Methodology, 72(4), 417-473.
-2. Nogueira, S., Sechidis, K., & Brown, G. (2018). On the stability of feature selection algorithms. Journal of Machine Learning Research, 18(174), 1-54.
-3. [GitHub repository of Nogueira et al (2018)](https://github.com/nogueirs/JMLR2018)
-4. Tibshirani, R. (1996). Regression shrinkage and selection via the Lasso. Journal of the Royal Statistical Society Series B: Statistical Methodology, 58(1), 267-288.
+1. Nouraie, M., & Muller, S. (2026). Stability-guided hyper-parameter tuning for stability selection. Communications in Statistics - Theory and Methods, 1–19.
+2. Meinshausen, N., & Bühlmann, P. (2010). Stability selection. Journal of the Royal Statistical Society Series B: Statistical Methodology, 72(4), 417-473.
+3. Nogueira, S., Sechidis, K., & Brown, G. (2018). On the stability of feature selection algorithms. Journal of Machine Learning Research, 18(174), 1-54.
+4. [GitHub repository of Nogueira et al (2018)](https://github.com/nogueirs/JMLR2018)
+5. Tibshirani, R. (1996). Regression shrinkage and selection via the Lasso. Journal of the Royal Statistical Society Series B: Statistical Methodology, 58(1), 267-288.
 
 
 
