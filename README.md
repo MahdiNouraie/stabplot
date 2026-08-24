@@ -5,7 +5,7 @@ Help functions are available through R by `?stabplot`, `?Regustab`, and `?Convst
 
 The `stabplot` package depends on `glmnet`, `ggplot2`, and `latex2exp` packages.
 
----
+
 ## Installation
 
 You can install the latest version of `stabplot` from GitHub:
@@ -15,7 +15,7 @@ if (!require("devtools")){install.packages("devtools")} #installing devtools if 
 devtools::install_github("MahdiNouraie/stabplot") #installing stabplot
 library(stabplot) #loading stabplot
 ```
----
+
 ## Regustab
 
 `Regustab` function creates a plot that displays stability values in relation to regularisation values for Lasso through stability selection. The plot highlights key lambda values, including `lambda.min`, `lambda.1se`, and `lambda.stable`. If `lambda.stable` is not available, the function will display `lambda.stable.1sd`.
@@ -42,12 +42,12 @@ Regustab(x, y, B)
 ```
 ![Regustab Example](Figure/regustab.png)
 
----
+
 ## Convstab
 
 `Convstab` creates a plot displaying stability values along with confidence intervals, against the sequential sub-sampling index within stability selection. This plot aids in monitoring the convergence status of stability values. The function uses `lambda.stable` to generate the plot; if `lambda.stable` is unavailable, it defaults to `lambda.stable.1sd`.
 
-A toy esample of usage:
+A toy example of usage:
 ```r
 set.seed(123) # for reproducibility
 x <- matrix(rnorm(1000), ncol = 10)
@@ -62,9 +62,9 @@ Convstab(x, y, B, alpha, thr)
 #1       x1               0.970
 #2       x2               0.895
 ```
-![Regustab Example](Figure/convstab.png)
+![Convstab Example](Figure/convstab.png)
 
----
+
 ## References
 
 1. Nouraie, M., & Muller, S. (2026). Stability-guided hyper-parameter tuning for stability selection. Communications in Statistics - Theory and Methods, 1–19.
