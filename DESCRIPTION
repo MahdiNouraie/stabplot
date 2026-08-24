@@ -1,7 +1,7 @@
 Package: stabplot
 Type: Package
 Title: Stability Plots for Lasso Stability Selection
-Version: 0.0.2
+Version: 0.0.1
 Authors@R:
     c(
       person("Mahdi", "Nouraie", email = "mahdinouraie20@gmail.com",
