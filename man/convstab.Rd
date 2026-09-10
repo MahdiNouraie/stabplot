@@ -20,9 +20,9 @@ confidence intervals.}
 for reporting selected variables.}
 }
 \value{
-A stability plot showing the stability estimates and corresponding
-confidence intervals across sequential subsamples. The function also
-prints the variables whose selection frequencies exceed `thr`.
+A list containing the stability plot (`plot`) and a data frame of
+variables with selection frequencies exceeding `thr` (`selected`), returned
+invisibly. The plot is also displayed as a side effect.
 }
 \description{
 Creates a diagnostic plot of stability estimates and their confidence
@@ -31,18 +31,19 @@ is constructed using `lambda.stable` when the maximum stability exceeds
 0.75; otherwise, `lambda.stable.1sd` is used.
 }
 \examples{
-\dontrun{
+\donttest{
 set.seed(123)
 x <- matrix(rnorm(1000), ncol = 10)
 # create beta based on the first 3 columns of x and some error
 beta <- c(0.5, 0.4, 0.3, rep(0, 7))
 y <- x \%*\% beta + rnorm(100)
 B <- 200
-Convstab(x, y, B)  # Example usage of the Convstab function
-#output
-#Variable Selection_Frequency
-#1       x1               0.970
-#2       x2               0.895
+res <- Convstab(x, y, B)  # Example usage of the Convstab function
+res$selected
+# output
+# Variable Selection_Frequency
+# 1       x1               0.970
+# 2       x2               0.895
 
 }
 }

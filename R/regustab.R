@@ -3,11 +3,11 @@
 #' Provides two diagnostic plots for assessing stability selection with Lasso.
 #' The `Regustab` function plots stability values across the regularisation
 #' parameter grid, supporting regularisation tuning based on selection stability.
-#' It highlights and reports `lambda.min`, `lambda.1se`, and `lambda.stable`
-#' when the maximum stability exceeds 0.75. Otherwise, it reports
+#' It highlights and returns `lambda.min`, `lambda.1se`, and `lambda.stable`
+#' when the maximum stability exceeds 0.75. Otherwise, it returns
 #' `lambda.stable.1sd`, defined using a one-standard-deviation criterion.
 #' The `Convstab` function plots stability values against the number of
-#' subsamples to assess the convergence of the stability estimates and reports
+#' subsamples to assess the convergence of the stability estimates and returns
 #' variables with selection frequencies exceeding a specified threshold,
 #' which defaults to 0.5.
 #' @references
@@ -22,7 +22,6 @@
 #' Tibshirani, R. (1996). Regression shrinkage and selection via the lasso. Journal of the Royal Statistical Society Series B: Statistical Methodology, 58(1), 267-288.
 #'
 #' @seealso \link[=Regustab]{Regustab}, \link[=Convstab]{Convstab}
-#' @keywords internal
 "_PACKAGE"
 
 #' @keywords internal
@@ -116,27 +115,26 @@ getStability <- function(X,alpha=0.05) {
 #' @param y A numeric vector of response values.
 #' @param B An integer specifying the number of subsamples.
 #'
-#' @return A stability plot showing the relationship between the
-#' regularisation parameter and the stability estimate, with
-#' `lambda.min`, `lambda.1se`, and either `lambda.stable` or
-#' `lambda.stable.1sd` highlighted. The selected regularisation values
-#' are also printed to the console.
+#' @return A list containing the selected regularisation values
+#' (`min`, `1se`, and either `stable` or `stable.1sd`), returned invisibly.
+#' A stability plot is also produced as a side effect.
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' set.seed(123)
 #' x <- matrix(rnorm(1000), ncol = 10)
 #' # create beta based on the first 3 columns of x and some error
 #' beta <- c(1, 2, 3, rep(0, 7))
 #' y <- x %*% beta + rnorm(100)
 #' B <- 10
-#' Regustab(x, y, B)  # Example usage of the Regustab function
-#' #output
-#' $min
-#' [1] 0.07609021
-#' $`1se`
-#' [1] 0.2550241
-#' $stable
-#' [1] 0.3371269
+#' res <- Regustab(x, y, B)  # Example usage of the Regustab function
+#' res
+#' # output
+#' # $min
+#' # [1] 0.07609021
+#' # $`1se`
+#' # [1] 0.2550241
+#' # $stable
+#' #[1] 0.3371269
 #'
 #'}
 #'
@@ -162,6 +160,8 @@ Regustab <- function(x, y, B){
   candidate_set <- SM$candidate_set
   cv_lasso <- SM$cv_lasso
 
+  oldpar <- graphics::par(no.readonly = TRUE)
+  on.exit(graphics::par(oldpar))
   graphics::par(mgp = c(2.2, 0.6, 0))  # Adjust the second value to control title spacing
   graphics::plot(candidate_set, stab_values, type = "l", col = "blue", lwd = 2,
        xlab = latex2exp::TeX("Regularisation Value ($\\lambda$)"),
@@ -192,7 +192,8 @@ Regustab <- function(x, y, B){
          col = "red", pch = 19, cex = 2) # Show by red dot index_of_lambda_stable and stab_values[index_of_lambda_stable] on the plot
   graphics::text(candidate_set[index_of_lambda_stable], stab_values[index_of_lambda_stable],
        "stable", pos = 1, col = "red", cex = 1.5) # Add text for lambda_stable
-  print(list('min' = cv_lasso$lambda.min, '1se' = cv_lasso$lambda.1se, 'stable' = lambda_stable))
+  result <- list('min' = cv_lasso$lambda.min, '1se' = cv_lasso$lambda.1se, 'stable' = lambda_stable)
+  return(invisible(result))
   }
   else{
     max_stability <- max(stab_values, na.rm = TRUE) # Find the maximum stability value
@@ -203,7 +204,7 @@ Regustab <- function(x, y, B){
            col = "red", pch = 19, cex = 2) # Show by red dot index_of_stable_1sd and stab_values[index_of_stable_1sd] on the plot
     graphics::text(candidate_set[index_of_stable_1sd], stab_values[index_of_stable_1sd],
          "stable.1sd", pos = 1, col = "red", cex = 1.5) # Add text for stable.1sd
-    print(list('min' = cv_lasso$lambda.min, '1se' = cv_lasso$lambda.1se, 'stable.1sd' = candidate_set[index_of_stable_1sd]))
-
+    result <- list('min' = cv_lasso$lambda.min, '1se' = cv_lasso$lambda.1se, 'stable.1sd' = candidate_set[index_of_stable_1sd])
+    return(invisible(result))
   }
 }

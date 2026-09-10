@@ -14,22 +14,23 @@ utils::globalVariables(c("Iteration", "Stability", "Lower", "Upper"))
 #' @param thr A numeric value specifying the minimum selection frequency
 #'   for reporting selected variables.
 #'
-#' @return A stability plot showing the stability estimates and corresponding
-#' confidence intervals across sequential subsamples. The function also
-#' prints the variables whose selection frequencies exceed `thr`.
+#' @return A list containing the stability plot (`plot`) and a data frame of
+#' variables with selection frequencies exceeding `thr` (`selected`), returned
+#' invisibly. The plot is also displayed as a side effect.
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' set.seed(123)
 #' x <- matrix(rnorm(1000), ncol = 10)
 #' # create beta based on the first 3 columns of x and some error
 #' beta <- c(0.5, 0.4, 0.3, rep(0, 7))
 #' y <- x %*% beta + rnorm(100)
 #' B <- 200
-#' Convstab(x, y, B)  # Example usage of the Convstab function
-#' #output
-#' #Variable Selection_Frequency
-#' #1       x1               0.970
-#' #2       x2               0.895
+#' res <- Convstab(x, y, B)  # Example usage of the Convstab function
+#' res$selected
+#' # output
+#' # Variable Selection_Frequency
+#' # 1       x1               0.970
+#' # 2       x2               0.895
 #'
 #'}
 #' @references
@@ -67,10 +68,10 @@ Convstab <- function(x, y, B, alpha = 0.05, thr = 0.5){
     colnames(Stable_S) <- paste0('x', 1:ncol(x))
     # Calculate selection frequencies
     col_means <- colMeans(Stable_S)
-    # Filter columns with selection frequencies > thr and print their names and means
+    # Filter columns with selection frequencies > thr and return their names and means
     selected_cols <- col_means[col_means > thr]
-    print(data.frame(Variable = names(selected_cols), Selection_Frequency = selected_cols, row.names = NULL))
-    ggplot2::ggplot(stability, ggplot2::aes(x = Iteration, y = Stability)) +
+    selected_df<- data.frame(Variable = names(selected_cols), Selection_Frequency = selected_cols, row.names = NULL)
+    p <- ggplot2::ggplot(stability, ggplot2::aes(x = Iteration, y = Stability)) +
       ggplot2::geom_line() +
       ggplot2::geom_ribbon(ggplot2::aes(ymin = Lower, ymax = Upper), fill = 'blue', alpha = 0.7) + # Add ribbon for confidence interval
       ggplot2::labs(title = latex2exp::TeX('Stability of Stability Selection ($\\lambda = \\lambda_{stable}$)'),
@@ -83,6 +84,8 @@ Convstab <- function(x, y, B, alpha = 0.05, thr = 0.5){
         axis.text.x = ggplot2::element_text(size = 16),      # X-axis tick text size
         axis.text.y = ggplot2::element_text(size = 16)       # Y-axis tick text size
       )
+    print(p)
+    return(invisible(list(plot = p, selected = selected_df)))
   }
   else{
     max_stability <- max(stab_values, na.rm = TRUE) # Find the maximum stability value
@@ -99,10 +102,10 @@ Convstab <- function(x, y, B, alpha = 0.05, thr = 0.5){
     colnames(S_stable_1sd) <- paste0('x', 1:ncol(x))
     # Calculate selection frequencies
     col_means <- colMeans(S_stable_1sd)
-    # Filter columns with selection frequencies > thr and print their names and means
+    # Filter columns with selection frequencies > thr and return their names and means
     selected_cols <- col_means[col_means > thr]
-    print(data.frame(Variable = names(selected_cols), Selection_Frequency = selected_cols, row.names = NULL))
-    ggplot2::ggplot(stability, ggplot2::aes(x = Iteration, y = Stability)) +
+    selected_df <- data.frame(Variable = names(selected_cols), Selection_Frequency = selected_cols, row.names = NULL)
+    p <- ggplot2::ggplot(stability, ggplot2::aes(x = Iteration, y = Stability)) +
       ggplot2::geom_line() +
       ggplot2::geom_ribbon(ggplot2::aes(ymin = Lower, ymax = Upper), fill = 'blue', alpha = 0.7) + # Add ribbon for confidence interval
       ggplot2::labs(title = latex2exp::TeX('Stability of Stability Selection ($\\lambda = \\lambda_{stable.1sd}$)'),
@@ -115,6 +118,8 @@ Convstab <- function(x, y, B, alpha = 0.05, thr = 0.5){
         axis.text.x = ggplot2::element_text(size = 16),      # X-axis tick text size
         axis.text.y = ggplot2::element_text(size = 16)       # Y-axis tick text size
       )
+    print(p)
+    return(invisible(list(plot = p, selected = selected_df)))
   }
 }
 

@@ -9,11 +9,11 @@
 Provides two diagnostic plots for assessing stability selection with Lasso.
 The `Regustab` function plots stability values across the regularisation
 parameter grid, supporting regularisation tuning based on selection stability.
-It highlights and reports `lambda.min`, `lambda.1se`, and `lambda.stable`
-when the maximum stability exceeds 0.75. Otherwise, it reports
+It highlights and returns `lambda.min`, `lambda.1se`, and `lambda.stable`
+when the maximum stability exceeds 0.75. Otherwise, it returns
 `lambda.stable.1sd`, defined using a one-standard-deviation criterion.
 The `Convstab` function plots stability values against the number of
-subsamples to assess the convergence of the stability estimates and reports
+subsamples to assess the convergence of the stability estimates and returns
 variables with selection frequencies exceeding a specified threshold,
 which defaults to 0.5.
 }
@@ -40,4 +40,3 @@ Authors:
 }
 
 }
-\keyword{internal}

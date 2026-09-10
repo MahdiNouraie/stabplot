@@ -9,6 +9,7 @@ Authors@R:
       person("Samuel", "Muller", role = "aut")
     )
 Description: Provides stability selection with Lasso and two diagnostic plots for assessing selection stability. The Regustab plot shows stability across the regularisation parameter grid, while the Convstab plot shows stability as a function of the number of subsamples.
+References: Nouraie M, Muller S (2026) "Stability-guided hyper-parameter tuning for stability selection" <doi:10.1080/03610926.2026.2715517>
 License: MIT + file LICENSE
 Imports: glmnet, latex2exp, ggplot2
 Encoding: UTF-8

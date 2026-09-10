@@ -14,11 +14,9 @@ Regustab(x, y, B)
 \item{B}{An integer specifying the number of subsamples.}
 }
 \value{
-A stability plot showing the relationship between the
-regularisation parameter and the stability estimate, with
-`lambda.min`, `lambda.1se`, and either `lambda.stable` or
-`lambda.stable.1sd` highlighted. The selected regularisation values
-are also printed to the console.
+A list containing the selected regularisation values
+(`min`, `1se`, and either `stable` or `stable.1sd`), returned invisibly.
+A stability plot is also produced as a side effect.
 }
 \description{
 Creates a diagnostic plot of stability values across the regularisation
@@ -29,21 +27,22 @@ parameter grid for Lasso stability selection. The plot highlights
 is highlighted.
 }
 \examples{
-\dontrun{
+\donttest{
 set.seed(123)
 x <- matrix(rnorm(1000), ncol = 10)
 # create beta based on the first 3 columns of x and some error
 beta <- c(1, 2, 3, rep(0, 7))
 y <- x \%*\% beta + rnorm(100)
 B <- 10
-Regustab(x, y, B)  # Example usage of the Regustab function
-#output
-$min
-[1] 0.07609021
-$`1se`
-[1] 0.2550241
-$stable
-[1] 0.3371269
+res <- Regustab(x, y, B)  # Example usage of the Regustab function
+res
+# output
+# $min
+# [1] 0.07609021
+# $`1se`
+# [1] 0.2550241
+# $stable
+#[1] 0.3371269
 
 }
 
