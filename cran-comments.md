@@ -4,8 +4,8 @@ This is a resubmission. The previous submission passed automated CRAN
 checks but was returned after manual review with the following requests, 
 all of which have been addressed:
 
-* Added a `References` field to DESCRIPTION, citing the methods paper 
-  in the requested `authors (year) <doi:...>` format.
+* Added a citation for the methods paper to the `Description` field in 
+  DESCRIPTION, in the requested `authors (year) <doi:...>` format.
 
 * Replaced `\dontrun{}` with `\donttest{}` in the examples for 
   `Regustab()` and `Convstab()`.
