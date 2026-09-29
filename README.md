@@ -13,10 +13,19 @@ The methodology is based on the paper:
 
 ## Installation
 
-You can install the latest version of `stabplot` from GitHub:
+You can install and load the `stabplot` package using the following commands
+in R:
 
 ```r
-if (!require("devtools")){install.packages("devtools")} #installing devtools if it is not already installed
+# Install the stabplot package from CRAN
+install.packages("stabplot")
+
+# Or install the stabplot package from GitHub
+
+# Install 'devtools' if not already installed
+
+if (!require("devtools")){install.packages("devtools")} 
+
 devtools::install_github("MahdiNouraie/stabplot") #installing stabplot
 library(stabplot) #loading stabplot
 ```
