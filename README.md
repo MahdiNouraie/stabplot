@@ -7,6 +7,7 @@ stabplot
 Help functions are available through R by `?stabplot`, `?Regustab`, and `?Convstab`. 
 
 The methodology is based on the paper:
+
 **"Stability-guided hyper-parameter tuning for stability selection" (2026) Nouraie, Mahdi, and Samuel Muller, Communications in Statistics-Theory and Methods.**
 
 
