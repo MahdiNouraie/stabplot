@@ -1,5 +1,5 @@
 # stabplot
-
+================
 <img src="man/logo.png" align="right" height="200" alt="" />
 
 
