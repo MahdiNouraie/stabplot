@@ -4,9 +4,10 @@ stabplot
 
 
 `stabplot` is an R package designed to facilitate regularisation tuning and convergence monitoring in stability selection using Lasso. It provides two core functions, `Regustab` and `Convstab`, which help visualise stability in regularised models, supporting users in selecting appropriate regularisation parameters and assessing convergence.
-Help functions are available through R by `?stabplot`, `?Regustab`, and `?Convstab`. [Paper](https://www.tandfonline.com/doi/full/10.1080/03610926.2026.2715517)
+Help functions are available through R by `?stabplot`, `?Regustab`, and `?Convstab`. 
 
-The `stabplot` package depends on `glmnet`, `ggplot2`, and `latex2exp` packages.
+The methodology is based on the paper:
+**"Stability-guided hyper-parameter tuning for stability selection" (2026) Nouraie, Mahdi, and Samuel Muller, Communications in Statistics-Theory and Methods.**
 
 
 ## Installation
